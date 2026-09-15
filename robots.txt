@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Client forms and legal pages — no reason for these in search results.
+Disallow: /health-screening.html
+Disallow: /waiver.html
+Disallow: /privacy.html
+Disallow: /disclaimer.html
+
+Sitemap: https://temisblueprint.com/sitemap.xml

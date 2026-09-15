@@ -1,0 +1,17 @@
+<svg width="640" height="300" viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg">
+  <path d="M 322.8,63.4 L 339.7,73.1 Q 342.5,74.7 342.5,78 L 342.5,98
+           Q 342.5,101.3 339.7,102.9 L 322.8,112.6 Q 320,114.2 317.2,112.6
+           L 300.3,102.9 Q 297.5,101.3 297.5,98 L 297.5,78
+           Q 297.5,74.7 300.3,73.1 L 317.2,63.4 Q 320,61.8 322.8,63.4 Z"
+        fill="none" stroke="#2E4230" stroke-width="1.2"/>
+  <circle cx="320" cy="63" r="2.6" fill="#C05A3C"/>
+  <circle cx="342.5" cy="76" r="1.8" fill="#2E4230"/>
+  <circle cx="342.5" cy="100" r="1.8" fill="#2E4230"/>
+  <circle cx="320" cy="113" r="1.8" fill="#2E4230"/>
+  <circle cx="297.5" cy="100" r="1.8" fill="#2E4230"/>
+  <circle cx="297.5" cy="76" r="1.8" fill="#2E4230"/>
+  <text x="320" y="180" text-anchor="middle" font-family="Cormorant Garamond, Georgia, 'Times New Roman', serif"
+        font-size="40" fill="#2E4230" letter-spacing="0.5">The Temi Blueprint</text>
+  <text x="320" y="214" text-anchor="middle" font-family="Cormorant Garamond, Georgia, 'Times New Roman', serif"
+        font-style="italic" font-size="14" fill="#C05A3C" letter-spacing="2.5">eat well &#183; train strong</text>
+</svg>

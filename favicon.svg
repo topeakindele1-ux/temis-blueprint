@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- The brand hexagon, simplified for tiny sizes. At 16px a hairline stroke
+       disappears, so the shape is filled solid and only the terracotta point
+       is kept — that dot is what makes it recognisably yours in a tab strip. -->
+  <rect width="64" height="64" rx="10" fill="#F7F4EC"/>
+  <path d="M 35.6,13.6 L 51.2,22.6 Q 53.8,24.1 53.8,27.1 L 53.8,45.5
+           Q 53.8,48.5 51.2,50.0 L 35.6,59.0 Q 33.0,60.5 30.4,59.0
+           L 14.8,50.0 Q 12.2,48.5 12.2,45.5 L 12.2,27.1
+           Q 12.2,24.1 14.8,22.6 L 30.4,13.6 Q 33.0,12.1 35.6,13.6 Z"
+        fill="#2E4230"/>
+  <circle cx="33" cy="13" r="6" fill="#C05A3C"/>
+</svg>

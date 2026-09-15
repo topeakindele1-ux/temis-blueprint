@@ -1,0 +1,588 @@
+/* ==========================================================================
+   The Temi Blueprint — site styles
+   --------------------------------------------------------------------------
+   Brand tokens come from the Aug 24 handoff. Green does the structural work,
+   terracotta is the action colour, gold only ever appears as dots + overlines.
+   ========================================================================== */
+
+:root {
+  --green: #2E4230;
+  --cream: #F7F4EC;
+  --gold: #D8B24A;
+  --terracotta: #C05A3C;
+  --terracotta-dark: #A84B30;
+  --ink: #2A2A26;
+  --muted: #6B6B62;
+  --line: #DCD7C9;
+  --white: #ffffff;
+
+  --serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --sans: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --page: 1180px;
+  --gutter: 24px;
+}
+
+@media (min-width: 900px) {
+  :root { --gutter: 64px; }
+}
+
+/* --- reset ---------------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; }
+
+/* Keyboard users must always be able to see where they are. */
+:focus-visible {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 3px;
+}
+
+.skip-link {
+  position: absolute; left: -9999px;
+  background: var(--green); color: var(--cream);
+  padding: 12px 20px; z-index: 100;
+}
+.skip-link:focus { left: 12px; top: 12px; }
+
+/* --- typography ----------------------------------------------------------- */
+
+.serif { font-family: var(--serif); }
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 600;
+  color: var(--green);
+  line-height: 1.12;
+  letter-spacing: 0.2px;
+}
+
+h1 { font-size: clamp(2.35rem, 6vw, 3.375rem); }
+h2 { font-size: clamp(1.85rem, 4.4vw, 2.375rem); }
+h3 { font-size: clamp(1.25rem, 2.4vw, 1.375rem); }
+
+p { color: var(--muted); }
+p.lead { font-size: clamp(1rem, 1.6vw, 1.0625rem); line-height: 1.65; }
+
+.overline {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 3.5px;
+  text-transform: uppercase;
+  color: var(--terracotta);
+}
+
+.micro {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+/* --- layout --------------------------------------------------------------- */
+
+.wrap {
+  max-width: var(--page);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+section { padding-block: clamp(48px, 8vw, 76px); }
+
+/* Full-width green band — the site's structural rhythm, straight from the
+   coaching-plan documents so print and web read as one system. */
+.band { background: var(--green); }
+.band h2, .band h3 { color: var(--cream); }
+.band p { color: rgba(247, 244, 236, 0.8); }
+.band .overline { color: var(--gold); }
+
+.band-cream { background: var(--cream); }
+
+/* Full-bleed photograph used as a section break. Kept short so it reads as a
+   band in the page's rhythm, the same role the green bands play. */
+/* Taller than a typical band, on purpose: the photo is a wide landscape and
+   Temi stands in the lower third, so a short strip cut her off at the chest.
+   This height plus the low focal point keeps her whole figure in frame and
+   still leaves the mountains behind her. */
+.photo-band {
+  height: clamp(320px, 46vw, 620px);
+  overflow: hidden;
+}
+.photo-band img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 88%;
+}
+
+.split {
+  display: grid;
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+}
+/* For pairings where one side is much taller than the other, centring leaves
+   the short side stranded in the middle. */
+.split-top { align-items: start; }
+@media (min-width: 900px) {
+  .split { grid-template-columns: 1fr 1fr; }
+  .split.split-wide-left { grid-template-columns: 1.15fr 1fr; }
+}
+
+.cols {
+  display: grid;
+  gap: clamp(28px, 4vw, 48px);
+}
+@media (min-width: 760px) { .cols-3 { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 620px) { .cols-2 { grid-template-columns: repeat(2, 1fr); } }
+
+/* --- the hexagon mark ----------------------------------------------------- */
+
+.hex-mark { width: 30px; height: 34px; flex-shrink: 0; }
+
+.hex-portrait { width: min(100%, 420px); margin-inline: auto; }
+.hex-portrait figcaption {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--green);
+  text-align: center;
+  margin-top: 12px;
+}
+
+/* --- nav ------------------------------------------------------------------ */
+
+.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--cream);
+  border-bottom: 1px solid transparent;
+}
+.nav.is-stuck { border-bottom-color: var(--line); }
+
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px;
+  padding-block: 18px;
+}
+
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand-name {
+  font-family: var(--serif);
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: var(--green);
+  white-space: nowrap;
+}
+
+.nav-links {
+  display: flex; align-items: center; gap: clamp(18px, 2.4vw, 32px);
+  list-style: none; padding: 0;
+  font-size: 0.845rem;
+}
+.nav-links a { text-decoration: none; color: var(--ink); padding-block: 4px; }
+.nav-links a:hover { color: var(--terracotta); }
+.nav-links a[aria-current="page"] {
+  color: var(--green); font-weight: 600;
+  box-shadow: inset 0 -1px 0 var(--gold);
+}
+
+.nav-toggle {
+  display: none;
+  background: none; border: 1px solid var(--line);
+  padding: 9px 11px; cursor: pointer;
+  color: var(--green);
+}
+
+@media (max-width: 899px) {
+  .nav-toggle { display: block; }
+  .nav-links {
+    display: none;
+    position: absolute; left: 0; right: 0; top: 100%;
+    flex-direction: column; align-items: stretch; gap: 0;
+    background: var(--cream);
+    border-block: 1px solid var(--line);
+    padding: 8px var(--gutter) 20px;
+    font-size: 1rem;
+  }
+  .nav-links.is-open { display: flex; }
+  .nav-links li { border-bottom: 1px solid rgba(46, 66, 48, 0.08); }
+  .nav-links li:last-child { border-bottom: 0; padding-top: 14px; }
+  .nav-links a { display: block; padding-block: 13px; }
+}
+
+/* --- buttons -------------------------------------------------------------- */
+
+.btn {
+  display: inline-block;
+  font-family: var(--sans);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  padding: 15px 30px;
+  text-decoration: none;
+  text-align: center;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-primary { background: var(--terracotta); color: var(--white); }
+.btn-primary:hover { background: var(--terracotta-dark); }
+
+.btn-ghost { border-color: var(--green); color: var(--green); background: none; }
+.btn-ghost:hover { background: var(--green); color: var(--cream); }
+
+.band .btn-ghost { border-color: var(--cream); color: var(--cream); }
+.band .btn-ghost:hover { background: var(--cream); color: var(--green); }
+
+.btn-sm { font-size: 0.8125rem; padding: 10px 20px; }
+
+.btns { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* On a phone, stacked buttons of different widths look like a mistake.
+   Give them the full width so the calls to action stay confident. */
+@media (max-width: 479px) {
+  .btns .btn { flex: 1 1 100%; }
+}
+
+/* Inline text link that still reads as an action. */
+.link-action {
+  color: var(--terracotta);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(192, 90, 60, 0.35);
+  padding-bottom: 2px;
+}
+.link-action:hover { border-bottom-color: var(--terracotta); }
+
+/* --- hero ----------------------------------------------------------------- */
+
+.hero { padding-block: clamp(40px, 6vw, 68px) clamp(48px, 7vw, 76px); }
+.hero h1 { margin: 18px 0; }
+.hero p.lead { margin-bottom: 28px; max-width: 46ch; }
+.hero .micro { margin-top: 16px; }
+
+@media (max-width: 899px) {
+  .hero .hex-portrait { width: min(100%, 320px); margin-top: 8px; }
+}
+
+/* --- gold-dot column list (the "method" pattern) -------------------------- */
+
+.dot-head {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 10px;
+}
+.dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--gold); flex-shrink: 0;
+}
+.dot-lg { width: 9px; height: 9px; }
+
+/* --- cards ---------------------------------------------------------------- */
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--line);
+  box-shadow: 0 6px 22px rgba(46, 66, 48, 0.13);
+}
+
+/* Plan preview — deliberately reuses the coaching plan's table language. */
+.card-head {
+  background: var(--green);
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 12px;
+  padding: 13px 18px;
+}
+.card-head b {
+  font-family: var(--serif); font-size: 1rem; font-weight: 600; color: var(--cream);
+}
+.card-head i {
+  font-family: var(--serif); font-size: 0.72rem; color: var(--gold); white-space: nowrap;
+}
+.card-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 16px;
+  padding: 11px 18px;
+  font-size: 0.8125rem;
+}
+.card-row:nth-child(odd) { background: rgba(46, 66, 48, 0.03); }
+.card-row b { color: var(--green); font-weight: 600; }
+.card-row span { color: var(--muted); font-size: 0.78rem; text-align: right; }
+
+/* Content card — workouts, recipes, classes, pricing. */
+.tile {
+  background: var(--white);
+  border: 1px solid var(--line);
+  padding: 28px 26px;
+  display: flex; flex-direction: column;
+  height: 100%;
+}
+.tile h3 { margin-bottom: 10px; }
+.tile p { font-size: 0.9rem; flex-grow: 1; }
+.tile .btn, .tile .link-action { margin-top: 20px; align-self: flex-start; }
+.tile-meta {
+  font-family: var(--serif); font-style: italic;
+  font-size: 0.85rem; color: var(--terracotta);
+  margin-bottom: 6px;
+}
+
+.tile-featured { border-color: var(--green); border-width: 2px; }
+
+/* A story slot with nobody in it yet. Deliberately looks unfinished so it can
+   never be mistaken for a real client quote. Nothing uses this right now —
+   kept because it's the right way to hold a space for a testimonial you're
+   still waiting on. Add class="tile--awaiting" to a tile to use it again. */
+.tile--awaiting {
+  background: transparent;
+  border-style: dashed;
+  border-color: #c9c3b3;
+}
+.tile--awaiting h3 { color: #8d8a80; }
+.tile--awaiting p { color: #8d8a80; font-style: italic; }
+
+.price {
+  font-family: var(--serif);
+  font-size: 2rem; font-weight: 600; color: var(--green);
+  margin-block: 6px 4px;
+}
+.price small { font-family: var(--sans); font-size: 0.8rem; color: var(--muted); font-weight: 400; }
+
+/* Checklist */
+.ticks { list-style: none; padding: 0; margin-block: 14px; }
+.ticks li {
+  position: relative; padding-left: 22px;
+  font-size: 0.9rem; color: var(--muted);
+  margin-bottom: 9px;
+}
+.ticks li::before {
+  content: ""; position: absolute; left: 0; top: 9px;
+  width: 7px; height: 7px; border-radius: 50%; background: var(--gold);
+}
+.band .ticks li { color: rgba(247, 244, 236, 0.82); }
+
+/* Numbered steps */
+.steps { list-style: none; padding: 0; counter-reset: step; }
+.steps li {
+  counter-increment: step;
+  position: relative; padding-left: 54px;
+  margin-bottom: 28px;
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute; left: 0; top: -2px;
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  font-family: var(--serif); font-size: 1.05rem; color: var(--green);
+}
+.band .steps li::before { color: var(--gold); }
+.steps h3 { margin-bottom: 6px; }
+
+/* --- email capture -------------------------------------------------------- */
+
+.capture { max-width: 560px; }
+.capture-form {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin-top: 20px;
+}
+.capture-form input[type="email"],
+.capture-form input[type="text"] {
+  flex: 1 1 220px;
+  font-family: var(--sans); font-size: 0.9375rem;
+  padding: 15px 16px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--ink);
+}
+.band .capture-form input { border-color: rgba(247, 244, 236, 0.3); }
+.capture-form input::placeholder { color: #9a9a90; }
+/* Inputs share the first row; the button takes the full width beneath them,
+   so it never wraps into a lonely half-row. */
+.capture-form .btn { flex: 1 0 100%; }
+.capture-note { font-size: 0.78rem; margin-top: 12px; }
+
+/* --- FAQ / disclosure ----------------------------------------------------- */
+
+.faq { border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary {
+  font-family: var(--serif); font-size: 1.2rem; color: var(--green);
+  padding: 20px 36px 20px 0;
+  cursor: pointer; list-style: none;
+  position: relative;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+"; position: absolute; right: 4px; top: 18px;
+  font-size: 1.4rem; color: var(--terracotta); font-family: var(--sans);
+}
+.faq details[open] summary::after { content: "–"; }
+.faq details p { padding-bottom: 20px; font-size: 0.9375rem; max-width: 68ch; }
+
+/* --- notices -------------------------------------------------------------- */
+
+.notice {
+  border-left: 3px solid var(--terracotta);
+  background: rgba(192, 90, 60, 0.05);
+  padding: 18px 22px;
+  font-size: 0.875rem;
+}
+.notice strong { color: var(--green); }
+
+/* --- footer --------------------------------------------------------------- */
+
+.footer { background: var(--green); text-align: center; padding-block: 48px 44px; }
+.footer .wm {
+  font-family: var(--serif); font-size: 1.5rem; font-weight: 600; color: var(--cream);
+}
+.footer .tagline {
+  font-family: var(--serif); font-style: italic;
+  font-size: 0.8125rem; letter-spacing: 2px; color: var(--gold);
+  margin-block: 8px;
+}
+.dots { display: flex; gap: 10px; justify-content: center; margin-block: 12px; }
+.dots i { width: 5px; height: 5px; border-radius: 50%; background: rgba(216, 178, 74, 0.6); }
+.dots i:first-child { background: var(--terracotta); }
+
+.footer-nav {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px;
+  list-style: none; padding: 0;
+  margin-block: 26px 22px;
+  font-size: 0.85rem;
+}
+.footer-nav a { color: rgba(247, 244, 236, 0.85); text-decoration: none; }
+.footer-nav a:hover { color: var(--gold); }
+
+.socials { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; }
+.socials a { color: rgba(247, 244, 236, 0.85); }
+.socials a:hover { color: var(--gold); }
+.socials svg { width: 19px; height: 19px; }
+
+.footer-meta {
+  font-size: 0.7rem; letter-spacing: 1.5px;
+  color: rgba(247, 244, 236, 0.55);
+  line-height: 1.9;
+}
+.footer-meta a { color: rgba(247, 244, 236, 0.7); }
+
+/* --- utilities ------------------------------------------------------------ */
+
+.mt-0 { margin-top: 0; }
+.mt-1 { margin-top: 12px; }
+.mt-2 { margin-top: 24px; }
+.mt-3 { margin-top: 36px; }
+.mb-2 { margin-bottom: 24px; }
+.mb-3 { margin-bottom: 36px; }
+.measure { max-width: 62ch; }
+.center { text-align: center; }
+.center .measure, .center .capture { margin-inline: auto; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* --- before and after pair ------------------------------------------------- */
+
+.ba {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-top: 28px;
+}
+.ba figure { margin: 0; }
+.ba .shot { overflow: hidden; aspect-ratio: 3 / 4; }
+.ba img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* The two photos were taken at different distances. Zooming the earlier one
+   in makes Temi a similar size in both, so the pair reads as a comparison
+   rather than two unrelated pictures. */
+.ba .shot--before img { transform: scale(1.5); transform-origin: 52% 60%; }
+
+.ba figcaption {
+  background: var(--green);
+  color: var(--cream);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-align: center;
+  padding: 14px 8px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+/* Terracotta point marks the later photo — the same accent as the top point
+   of the hexagon. Gold stays reserved for dots and overlines. */
+.ba figcaption i { width: 8px; height: 8px; border-radius: 50%; background: var(--terracotta); }
+
+/* The same pair, sized to sit inside a story card on the Results page.
+   Smaller type on the labels so they don't shout next to the quote. */
+.ba--inline { margin: 4px 0 18px; gap: 3px; }
+.ba--inline figcaption { font-size: 0.62rem; letter-spacing: 1.6px; padding: 9px 4px; gap: 7px; }
+.ba--inline figcaption i { width: 6px; height: 6px; }
+
+/* --- forms clients fill in and sign ---------------------------------------- */
+
+.form-q {
+  border-bottom: 1px solid var(--line);
+  padding: 14px 0;
+  display: flex; gap: 20px; align-items: flex-start;
+  font-size: 0.9375rem;
+}
+.form-q p { color: var(--ink); flex: 1; margin: 0; }
+.form-q .yn {
+  display: flex; gap: 14px; flex-shrink: 0;
+  font-size: 0.8125rem; color: var(--muted);
+}
+.form-q .yn span { display: flex; align-items: center; gap: 6px; }
+.box {
+  width: 15px; height: 15px;
+  border: 1px solid var(--green);
+  display: inline-block; flex-shrink: 0;
+}
+.write-line {
+  border-bottom: 1px solid var(--line);
+  min-height: 34px;
+  margin-top: 8px;
+}
+.sign-grid {
+  display: grid; gap: 26px 32px;
+  grid-template-columns: 1fr;
+  margin-top: 26px;
+}
+@media (min-width: 620px) { .sign-grid { grid-template-columns: 2fr 1fr; } }
+.sign-grid label {
+  font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--muted); font-weight: 600;
+}
+.sign-grid .write-line { min-height: 44px; }
+
+@media print {
+  .nav, .footer, .skip-link, .no-print { display: none !important; }
+  body { background: #fff; font-size: 11pt; }
+  section { padding-block: 12px !important; }
+  .wrap { max-width: none; padding-inline: 0; }
+  .band, .band-cream { background: #fff !important; }
+  .band h2, .band h3 { color: var(--green) !important; }
+  .band p { color: var(--ink) !important; }
+  .notice { border-left-color: #999; background: #f4f4f4; }
+  h1 { font-size: 20pt; }
+  h2 { font-size: 15pt; }
+  .page-break { page-break-before: always; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
