@@ -16,7 +16,22 @@ at the top between quote marks. Leave the part below "BEHAVIOUR" alone.
 
 **Prices:** `coaching.html`, in lines that look like `<p class="price">$220...`
 
-Then commit and push, and the live site updates within a minute or two.
+Then commit and push. The live site updates within a minute or two — GitHub Pages
+rebuilds automatically on every push to `main`.
+
+## Deploying
+
+```
+cd "path/to/Temi - Blueprint/site"
+git add -A
+git commit -m "what you changed"
+git push
+```
+
+That's the whole deploy. There's no build step and nothing to upload — pushing *is*
+deploying. Watch it happen under the repo's **Actions** tab if you want to see it run.
+
+Authentication is by SSH key, already set up on Temi's Mac. Nothing to type.
 
 ## The pages
 
