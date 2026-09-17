@@ -19,9 +19,18 @@ const SETTINGS = {
   // it was first created — worth renaming in Cal.com so it reads properly.)
   bookingSession: "https://cal.com/temi-blueprint/15min",
 
-  /* --- Your email list (from Kit) ---------------------------------------- */
-  // Your "Starter Pack - free workouts" form. Connected and published.
-  // If you ever rebuild the form, get this again from:
+  /* --- Your email list (from Kit) ----------------------------------------
+     TWO lists, on purpose. Someone who arrives from a Google search for
+     overnight oats wants food, not squats — so the recipe pages offer the
+     meal plan and the rest of the site offers the workout guide. Keeping
+     them apart means you'll know who came for what when you start emailing
+     people, which is worth a lot more than one bigger list. */
+
+  // "Meal Plan - recipes" — used on recipes.html and every recipe page.
+  recipesFormAction: "https://app.kit.com/forms/9931591/subscriptions",
+
+  // "Starter Pack - free workouts" — used on every other page.
+  // If you ever rebuild either form, get the address again from:
   // Kit > Audience growth > Landing pages & forms > your form > Embed > HTML,
   // and copy the web address inside action="...".
   kitFormAction: "https://app.kit.com/forms/9857095/subscriptions",
@@ -76,6 +85,12 @@ const SETTINGS = {
      stop the form from pretending to work — a form that silently loses
      someone's email address is worse than no form at all. */
   document.querySelectorAll("form[data-kit-form]").forEach(function (form) {
+    // Recipe pages collect onto the food list instead.
+    var onRecipePage = location.pathname.indexOf("recipe") !== -1;
+    if (onRecipePage && SETTINGS.recipesFormAction) {
+      form.setAttribute("action", SETTINGS.recipesFormAction);
+      return;
+    }
     if (SETTINGS.kitFormAction) {
       form.setAttribute("action", SETTINGS.kitFormAction);
       return;
