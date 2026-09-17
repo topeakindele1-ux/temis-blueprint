@@ -37,10 +37,11 @@ const SETTINGS = {
   youtube: "",
 
   /* --- Contact ------------------------------------------------------------ */
-  // NOTE: this mailbox does not exist yet. Buying the domain does not create
-  // an inbox — until you set one up, mail sent here goes nowhere. Either set
-  // up email on temisblueprint.com, or change this to an address you read.
-  email: "hello@temisblueprint.com",
+  // Your Gmail, on purpose. hello@temisblueprint.com looks better but doesn't
+  // exist — buying a domain doesn't create an inbox, and mail sent there goes
+  // nowhere. A working address beats a smart-looking dead one.
+  // When you set up a real mailbox on the domain, change this one line.
+  email: "topeakindele1@gmail.com",
 
   /* --- Business details --------------------------------------------------- */
   businessName: "The Temi Blueprint",
