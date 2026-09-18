@@ -154,6 +154,11 @@ section { padding-block: clamp(48px, 8vw, 76px); }
 .hex-mark { width: 30px; height: 34px; flex-shrink: 0; }
 
 .hex-portrait { width: min(100%, 420px); margin-inline: auto; }
+
+/* A straight photograph rather than the hexagon crop — used where the point
+   is the work itself, not the portrait. */
+.coach-shot { width: min(100%, 420px); margin-inline: auto; }
+.coach-shot img { width: 100%; height: auto; display: block; }
 .hex-portrait figcaption {
   font-family: var(--serif);
   font-style: italic;
