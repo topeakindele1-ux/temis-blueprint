@@ -547,7 +547,7 @@ section { padding-block: clamp(48px, 8vw, 76px); }
    already closest to the camera in it; it just sits on the bottom edge so
    her feet stay in. The origins sit outside the frame on purpose: that's
    what lifts her up it. */
-.ba .shot--before img { transform: scale(1.78); transform-origin: 42% 57%; }
+.ba .shot--before img { transform: scale(1.40); transform-origin: 38% 77%; }
 .ba .shot--mid    img { object-position: center bottom; }
 .ba .shot--after  img { transform: scale(1.78); transform-origin: 60% 94%; }
 
