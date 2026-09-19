@@ -512,10 +512,14 @@ section { padding-block: clamp(48px, 8vw, 76px); }
 .ba .shot { overflow: hidden; aspect-ratio: 3 / 4; }
 .ba img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-/* The two photos were taken at different distances. Zooming the earlier one
-   in makes Temi a similar size in both, so the pair reads as a comparison
-   rather than two unrelated pictures. */
-.ba .shot--before img { transform: scale(1.5); transform-origin: 52% 60%; }
+/* The two photos were taken at different distances — a small bathroom in
+   2020, a large open gym in 2026. Both are zoomed so Temi is the same size
+   in each frame, because a pair where one figure is bigger reads as a trick
+   rather than a comparison. The odd-looking origins are what put her in the
+   same place in both: the scaled point that stays fixed has to sit outside
+   the frame to lift her up it. */
+.ba .shot--before img { transform: scale(1.5);  transform-origin: 52% 60%; }
+.ba .shot--after  img { transform: scale(1.43); transform-origin: 59% 107%; }
 
 .ba figcaption {
   background: var(--green);
