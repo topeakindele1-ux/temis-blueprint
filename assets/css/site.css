@@ -128,6 +128,9 @@ section { padding-block: clamp(48px, 8vw, 76px); }
   object-fit: cover;
   object-position: center 88%;
 }
+/* Temi sits on the floor in the gym shot, so that band has to hold the
+   bottom edge or the crop takes her legs off. */
+.photo-band--floor img { object-position: 60% 100%; }
 
 .split {
   display: grid;
