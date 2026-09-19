@@ -140,6 +140,7 @@ section { padding-block: clamp(48px, 8vw, 76px); }
 /* For pairings where one side is much taller than the other, centring leaves
    the short side stranded in the middle. */
 .split-top { align-items: start; }
+
 @media (min-width: 900px) {
   .split { grid-template-columns: 1fr 1fr; }
   .split.split-wide-left { grid-template-columns: 1.15fr 1fr; }
@@ -283,8 +284,23 @@ section { padding-block: clamp(48px, 8vw, 76px); }
 .hero p.lead { margin-bottom: 28px; max-width: 46ch; }
 .hero .micro { margin-top: 16px; }
 
+/* On a phone the hero stacks, and the photo used to land after the headline,
+   the lead, both buttons and the note under them. That left Temi's face as
+   the last thing on a screen plenty of people never scroll to. It goes first
+   now, and it's smaller than on desktop so the headline and both buttons
+   still fit on the opening screen. */
 @media (max-width: 899px) {
-  .hero .hex-portrait { width: min(100%, 320px); margin-top: 8px; }
+  .hero .split > figure { order: -1; }
+  .hero .hex-portrait,
+  .hero .coach-shot { width: min(62vw, 240px); margin-top: 0; }
+
+  /* Everything above the buttons is tightened by a few pixels each so that
+     the photo, the headline, the promise and BOTH buttons land on the first
+     screen of a phone. Measured at 375x812, the smallest phone worth
+     designing for. */
+  .hero { padding-top: 32px; }
+  .hero h1 { margin: 14px 0; }
+  .hero p.lead { margin-bottom: 20px; }
 }
 
 /* --- gold-dot column list (the "method" pattern) -------------------------- */
