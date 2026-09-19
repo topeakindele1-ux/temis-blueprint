@@ -519,7 +519,7 @@ section { padding-block: clamp(48px, 8vw, 76px); }
    same place in both: the scaled point that stays fixed has to sit outside
    the frame to lift her up it. */
 .ba .shot--before img { transform: scale(1.5);  transform-origin: 52% 60%; }
-.ba .shot--after  img { transform: scale(1.43); transform-origin: 59% 107%; }
+.ba .shot--after  img { transform: scale(1.49); transform-origin: 63% 109%; }
 
 .ba figcaption {
   background: var(--green);
