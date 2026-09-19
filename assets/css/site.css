@@ -508,6 +508,11 @@ section { padding-block: clamp(48px, 8vw, 76px); }
   gap: 4px;
   margin-top: 28px;
 }
+/* Three steps rather than two. The middle photo is the point: it shows the
+   work still going on, instead of a jump that looks like a trick. Three
+   across stays three across on a phone — stacking them would destroy the
+   comparison, which is the only reason the photos are here. */
+.ba--three { grid-template-columns: repeat(3, 1fr); }
 .ba figure { margin: 0; }
 .ba .shot { overflow: hidden; aspect-ratio: 3 / 4; }
 .ba img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -518,8 +523,14 @@ section { padding-block: clamp(48px, 8vw, 76px); }
    rather than a comparison. The odd-looking origins are what put her in the
    same place in both: the scaled point that stays fixed has to sit outside
    the frame to lift her up it. */
-.ba .shot--before img { transform: scale(1.5);  transform-origin: 52% 60%; }
-.ba .shot--after  img { transform: scale(1.49); transform-origin: 63% 109%; }
+/* All three are zoomed to put Temi at the same height in every frame — she
+   measures the same in all three. The 2024 shot needs no zoom because she's
+   already closest to the camera in it; it just sits on the bottom edge so
+   her feet stay in. The origins sit outside the frame on purpose: that's
+   what lifts her up it. */
+.ba .shot--before img { transform: scale(1.78); transform-origin: 42% 57%; }
+.ba .shot--mid    img { object-position: center bottom; }
+.ba .shot--after  img { transform: scale(1.78); transform-origin: 60% 94%; }
 
 .ba figcaption {
   background: var(--green);
