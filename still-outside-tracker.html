@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Still Outside tracker &middot; 31 days of walking &middot; The Temi Blueprint</title>
+<meta name="description" content="Your tracker for the Still Outside walking challenge. Pick a lane, tick off each day of October, and keep your streak. Works on your phone and remembers where you are.">
+<meta property="og:title" content="Still Outside &middot; your 31-day tracker">
+<meta property="og:description" content="Pick a lane, tick off the days, finish October still outside.">
+<meta property="og:image" content="https://temisblueprint.com/assets/img/still-outside.jpg">
+<meta property="og:url" content="https://temisblueprint.com/still-outside-tracker.html">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://temisblueprint.com/still-outside-tracker.html">
+<meta property="og:site_name" content="The Temi Blueprint">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;600&display=swap">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/site.css">
+
+<style>
+  .lanes { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:.8rem; }
+  .lane-btn { font:inherit; cursor:pointer; text-align:left; padding:1rem 1.1rem;
+               border:2px solid rgba(46,66,48,.18); border-radius:12px; background:transparent; }
+  .lane-btn b { display:block; font-family:'Cormorant Garamond',Georgia,serif;
+                 font-size:1.8rem; color:#2E4230; line-height:1.1; }
+  .lane-btn span { font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:#C05A3C; }
+  .lane-btn[aria-pressed="true"] { border-color:#C05A3C; background:rgba(192,90,60,.10); }
+
+  .grid { display:grid; grid-template-columns:repeat(7,1fr); gap:.5rem; max-width:520px; }
+  .day { aspect-ratio:1; font:inherit; cursor:pointer; border-radius:10px;
+          border:2px solid rgba(46,66,48,.22); background:transparent; color:rgba(46,66,48,.6);
+          display:flex; align-items:center; justify-content:center; font-weight:600;
+          transition:background .12s, border-color .12s; }
+  .day[aria-pressed="true"] { background:#2E4230; border-color:#2E4230; color:#F7F4EC; }
+  .day[aria-pressed="true"] span { opacity:.55; }
+
+  .score { font-family:'Cormorant Garamond',Georgia,serif; font-size:clamp(2rem,6vw,2.8rem);
+            color:#2E4230; }
+  .score b { color:#C05A3C; }
+  .streak { font-size:.95rem; color:rgba(42,42,38,.65); }
+
+  .mission { display:flex; gap:1rem; align-items:flex-start; padding:.9rem 0; cursor:pointer;
+              border-top:1px solid rgba(46,66,48,.14); }
+  .mission:first-of-type { border-top:0; }
+  .mission input { position:absolute; opacity:0; width:0; height:0; }
+  .mbox { flex:0 0 auto; width:28px; height:28px; border-radius:7px; margin-top:.15rem;
+           border:2px solid rgba(46,66,48,.3); }
+  .mission input:checked + .mbox { background:#C05A3C; border-color:#C05A3C; }
+  .mission input:focus-visible + .mbox { outline:3px solid #D8B24A; outline-offset:2px; }
+  .mtext b { display:block; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+              color:#B9923A; }
+  .mtext em { display:block; font-style:normal; font-family:'Cormorant Garamond',Georgia,serif;
+               font-size:1.35rem; color:#2E4230; }
+  .mtext small { color:rgba(42,42,38,.7); }
+  .mission input:checked ~ .mtext em { text-decoration:line-through; opacity:.55; }
+
+  .reset { font:inherit; font-size:.9rem; background:none; border:0; cursor:pointer;
+            color:rgba(42,42,38,.55); text-decoration:underline; padding:0; }
+
+  @media print {
+    .nav, .footer, .reset, .noprint { display:none !important; }
+    .day, .lane-btn, .mbox { border-color:#555 !important; }
+    .day[aria-pressed="true"] { background:#fff !important; color:#000 !important; }
+  }
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html">
+      <svg class="hex-mark" viewBox="294 58 52 58" aria-hidden="true">
+        <path d="M 322.8,63.4 L 339.7,73.1 Q 342.5,74.7 342.5,78 L 342.5,98 Q 342.5,101.3 339.7,102.9 L 322.8,112.6 Q 320,114.2 317.2,112.6 L 300.3,102.9 Q 297.5,101.3 297.5,98 L 297.5,78 Q 297.5,74.7 300.3,73.1 L 317.2,63.4 Q 320,61.8 322.8,63.4 Z"
+              fill="none" stroke="#2E4230" stroke-width="1.6"/>
+        <circle cx="320" cy="63" r="2.6" fill="#C05A3C"/>
+      </svg>
+      <span class="brand-name">The Temi Blueprint</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false" aria-controls="nav-links" aria-label="Menu">
+      <svg width="18" height="12" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M0 1h18M0 6h18M0 11h18"/></svg>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="blueprint.html">The Blueprint</a></li>
+      <li><a href="coaching.html">Coaching</a></li>
+      <li><a href="free-workouts.html">Free Workouts</a></li>
+      <li><a href="recipes.html">Recipes</a></li>
+      <li><a href="transformations.html">Results</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a class="btn btn-primary btn-sm" data-link="bookingDiscovery" href="#">Start your blueprint</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero">
+  <div class="wrap">
+    <p class="overline">Still Outside &middot; your tracker</p>
+    <h1 class="mt-1 mb-2">31 days. Tick them off.</h1>
+    <p class="lead measure">Pick your lane, then tap a day each time you hit it. This page
+      remembers where you are on this device, so you can come back to it every evening.</p>
+    <p class="measure"><a href="still-outside.html">What the challenge is &rarr;</a></p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="overline">Step one</p>
+    <h2 class="mt-1 mb-2">Pick your lane</h2>
+    <p class="measure mb-3">Choose the one that is a stretch but not a fantasy. You can change
+      it later, but try not to.</p>
+    <div class="lanes">
+      <button class="lane-btn" data-lane="8,000" aria-pressed="false"><b>8,000</b><span>Starter</span></button>
+      <button class="lane-btn" data-lane="12,000" aria-pressed="false"><b>12,000</b><span>Steady</span></button>
+      <button class="lane-btn" data-lane="15,000" aria-pressed="false"><b>15,000</b><span>Strong</span></button>
+      <button class="lane-btn" data-lane="20,000" aria-pressed="false"><b>20,000</b><span>Relentless</span></button>
+    </div>
+  </div>
+</section>
+
+<section class="so-days">
+  <div class="wrap">
+    <p class="overline">Step two</p>
+    <h2 class="mt-1 mb-2">October</h2>
+    <p class="score mb-2"><b id="done">0</b> of 31 days</p>
+    <p class="streak mb-3" id="streak">Tap a day when you have hit your number.</p>
+    <div class="grid">
+        <button class="day" data-day="1" aria-pressed="false"><span>1</span></button>
+        <button class="day" data-day="2" aria-pressed="false"><span>2</span></button>
+        <button class="day" data-day="3" aria-pressed="false"><span>3</span></button>
+        <button class="day" data-day="4" aria-pressed="false"><span>4</span></button>
+        <button class="day" data-day="5" aria-pressed="false"><span>5</span></button>
+        <button class="day" data-day="6" aria-pressed="false"><span>6</span></button>
+        <button class="day" data-day="7" aria-pressed="false"><span>7</span></button>
+        <button class="day" data-day="8" aria-pressed="false"><span>8</span></button>
+        <button class="day" data-day="9" aria-pressed="false"><span>9</span></button>
+        <button class="day" data-day="10" aria-pressed="false"><span>10</span></button>
+        <button class="day" data-day="11" aria-pressed="false"><span>11</span></button>
+        <button class="day" data-day="12" aria-pressed="false"><span>12</span></button>
+        <button class="day" data-day="13" aria-pressed="false"><span>13</span></button>
+        <button class="day" data-day="14" aria-pressed="false"><span>14</span></button>
+        <button class="day" data-day="15" aria-pressed="false"><span>15</span></button>
+        <button class="day" data-day="16" aria-pressed="false"><span>16</span></button>
+        <button class="day" data-day="17" aria-pressed="false"><span>17</span></button>
+        <button class="day" data-day="18" aria-pressed="false"><span>18</span></button>
+        <button class="day" data-day="19" aria-pressed="false"><span>19</span></button>
+        <button class="day" data-day="20" aria-pressed="false"><span>20</span></button>
+        <button class="day" data-day="21" aria-pressed="false"><span>21</span></button>
+        <button class="day" data-day="22" aria-pressed="false"><span>22</span></button>
+        <button class="day" data-day="23" aria-pressed="false"><span>23</span></button>
+        <button class="day" data-day="24" aria-pressed="false"><span>24</span></button>
+        <button class="day" data-day="25" aria-pressed="false"><span>25</span></button>
+        <button class="day" data-day="26" aria-pressed="false"><span>26</span></button>
+        <button class="day" data-day="27" aria-pressed="false"><span>27</span></button>
+        <button class="day" data-day="28" aria-pressed="false"><span>28</span></button>
+        <button class="day" data-day="29" aria-pressed="false"><span>29</span></button>
+        <button class="day" data-day="30" aria-pressed="false"><span>30</span></button>
+        <button class="day" data-day="31" aria-pressed="false"><span>31</span></button>
+    </div>
+    <p class="mt-3 noprint"><button class="reset" id="reset">Clear everything and start again</button></p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="overline">One a week</p>
+    <h2 class="mt-1 mb-2">The missions</h2>
+    <p class="measure mb-3">The steps are the floor. These are the bit you will remember.</p>
+    <div class="measure">
+        <label class="mission">
+          <input type="checkbox" class="mtick" data-mission="0">
+          <span class="mbox" aria-hidden="true"></span>
+          <span class="mtext"><b>Oct 1&ndash;4</b><em>Somewhere new</em><small>A street or a path you have never walked</small></span>
+        </label>
+        <label class="mission">
+          <input type="checkbox" class="mtick" data-mission="1">
+          <span class="mbox" aria-hidden="true"></span>
+          <span class="mtext"><b>Oct 5&ndash;11</b><em>Walk in bad weather</em><small>Whatever the sky is doing, go anyway</small></span>
+        </label>
+        <label class="mission">
+          <input type="checkbox" class="mtick" data-mission="2">
+          <span class="mbox" aria-hidden="true"></span>
+          <span class="mtext"><b>Oct 12&ndash;18</b><em>Bring someone</em><small>A friend, a kid, a dog, a phone call</small></span>
+        </label>
+        <label class="mission">
+          <input type="checkbox" class="mtick" data-mission="3">
+          <span class="mbox" aria-hidden="true"></span>
+          <span class="mtext"><b>Oct 19&ndash;25</b><em>Before light</em><small>Sunrise, or after dark</small></span>
+        </label>
+        <label class="mission">
+          <input type="checkbox" class="mtick" data-mission="4">
+          <span class="mbox" aria-hidden="true"></span>
+          <span class="mtext"><b>Oct 26&ndash;31</b><em>Go long</em><small>Your longest walk of the month</small></span>
+        </label>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap center">
+    <h2 class="mt-0 mb-2">Finished the month?</h2>
+    <p class="measure mb-3" style="margin-left:auto;margin-right:auto">Send me a screenshot of
+      this page. I want to see all 31 ticked.</p>
+    <p class="btns" style="justify-content:center">
+      <a class="btn btn-primary" href="https://instagram.com/temis_blueprint">Send it to me</a>
+      <a class="btn btn-ghost" data-link="bookingDiscovery" href="#">Work with me properly</a>
+    </p>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="notice measure">
+      <strong>Before you start.</strong> This is a general movement challenge, not personal
+      medical advice. If you are pregnant, recovering from an injury or surgery, or managing a
+      health condition, check with your doctor before adding a large amount of daily walking.
+      Build up rather than jumping straight to your target, and stop if something hurts.
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="wm">The Temi Blueprint</div>
+    <div class="tagline">eat well · train strong</div>
+    <div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <ul class="footer-nav">
+      <li><a href="blueprint.html">The Blueprint</a></li>
+      <li><a href="coaching.html">Coaching</a></li>
+      <li><a href="free-workouts.html">Free Workouts</a></li>
+      <li><a href="recipes.html">Recipes</a></li>
+      <li><a href="transformations.html">Results</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="socials">
+      <a data-social="instagram" href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.6" cy="6.4" r="1.1" fill="currentColor" stroke="none"/></svg></a>
+      <a data-social="tiktok" href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 2h-2.9v13.2a2.6 2.6 0 1 1-2.2-2.6v-3a5.6 5.6 0 1 0 5.1 5.6V9.1a6.6 6.6 0 0 0 3.9 1.3V7.5a3.8 3.8 0 0 1-3.9-3.7V2z"/></svg></a>
+      <a data-social="youtube" href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3z"/></svg></a>
+    </div>
+    <p class="footer-meta">
+      <a data-link="email" href="#"><span data-text="email">topeakindele1@gmail.com</span></a><br>
+      Coaching in Vancouver, BC and online<br>
+      <a href="disclaimer.html">Health disclaimer</a> · <a href="privacy.html">Privacy</a><br><a href="health-screening.html">Health screening</a> · <a href="waiver.html">Client agreement</a>
+    </p>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+<script>
+// The tracker remembers itself in this browser. No account, no sign-up, and
+// nothing leaves the phone it is on. Clearing site data clears the ticks.
+(function () {
+  var KEY = 'still-outside-2026';
+  var state = { lane: null, days: [], missions: [] };
+
+  try {
+    var saved = localStorage.getItem(KEY);
+    if (saved) state = Object.assign(state, JSON.parse(saved));
+  } catch (e) { /* private mode, or storage blocked: the page still works */ }
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  var dayBtns = [].slice.call(document.querySelectorAll('.day'));
+  var laneBtns = [].slice.call(document.querySelectorAll('.lane-btn'));
+  var ticks = [].slice.call(document.querySelectorAll('.mtick'));
+  var doneEl = document.getElementById('done');
+  var streakEl = document.getElementById('streak');
+
+  function longestRun() {
+    var best = 0, run = 0;
+    for (var d = 1; d <= 31; d++) {
+      if (state.days.indexOf(d) > -1) { run++; best = Math.max(best, run); }
+      else run = 0;
+    }
+    return best;
+  }
+
+  function paint() {
+    dayBtns.forEach(function (b) {
+      var on = state.days.indexOf(+b.dataset.day) > -1;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    laneBtns.forEach(function (b) {
+      b.setAttribute('aria-pressed', b.dataset.lane === state.lane ? 'true' : 'false');
+    });
+    ticks.forEach(function (t) {
+      t.checked = state.missions.indexOf(+t.dataset.mission) > -1;
+    });
+    doneEl.textContent = state.days.length;
+    var run = longestRun();
+    streakEl.textContent = state.days.length === 0
+      ? 'Tap a day when you have hit your number.'
+      : (state.days.length === 31
+          ? 'Every single day. Send me a screenshot of this.'
+          : 'Longest run so far: ' + run + (run === 1 ? ' day.' : ' days in a row.'));
+  }
+
+  dayBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var d = +b.dataset.day, i = state.days.indexOf(d);
+      if (i > -1) state.days.splice(i, 1); else state.days.push(d);
+      save(); paint();
+    });
+  });
+
+  laneBtns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.lane = (state.lane === b.dataset.lane) ? null : b.dataset.lane;
+      save(); paint();
+    });
+  });
+
+  ticks.forEach(function (t) {
+    t.addEventListener('change', function () {
+      var m = +t.dataset.mission, i = state.missions.indexOf(m);
+      if (t.checked && i === -1) state.missions.push(m);
+      if (!t.checked && i > -1) state.missions.splice(i, 1);
+      save(); paint();
+    });
+  });
+
+  document.getElementById('reset').addEventListener('click', function () {
+    if (!confirm('Clear your lane, your days and your missions?')) return;
+    state = { lane: null, days: [], missions: [] };
+    save(); paint();
+  });
+
+  paint();
+})();
+</script>
+</body>
+</html>
