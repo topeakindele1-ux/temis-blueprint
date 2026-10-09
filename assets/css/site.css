@@ -152,10 +152,6 @@ section { padding-block: clamp(48px, 8vw, 76px); }
 }
 @media (min-width: 760px) { .cols-3 { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 620px) { .cols-2 { grid-template-columns: repeat(2, 1fr); } }
-/* Four cards go two-by-two before they go four across, because a quarter of
-   a narrow screen is not enough for a row of "3 x 30 s each side". */
-@media (min-width: 620px)  { .cols-4 { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1040px) { .cols-4 { grid-template-columns: repeat(4, 1fr); } }
 
 /* --- the hexagon mark ----------------------------------------------------- */
 
