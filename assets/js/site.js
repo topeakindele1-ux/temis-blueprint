@@ -133,3 +133,39 @@ const SETTINGS = {
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 })();
+
+/* ==================== MOVEMENT ====================
+   Marks the things worth animating, then lets the browser tell us when
+   each one enters the viewport. No library, no scroll listener. */
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) return;
+
+  var SELECTOR = 'main h1, main h2, main h3, main .lead, main .overline, ' +
+                 'main .tile, main .card, main .box, main .btns, main .notice, ' +
+                 'main .so-way, main .mission, main .lane, main figure, main .ba';
+  var items = [].slice.call(document.querySelectorAll(SELECTOR));
+  if (!items.length) return;
+
+  items.forEach(function (el) { el.classList.add('reveal'); });
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('is-in');
+      io.unobserve(e.target);          // once it has arrived, leave it alone
+    });
+  }, { rootMargin: '140px 0px 140px 0px', threshold: 0.01 });
+
+  items.forEach(function (el) { io.observe(el); });
+
+  // Anything already on screen at load should not wait for a scroll.
+  requestAnimationFrame(function () {
+    items.forEach(function (el) {
+      if (el.getBoundingClientRect().top < window.innerHeight * 1.1) {
+        el.classList.add('is-in');
+        io.unobserve(el);
+      }
+    });
+  });
+})();

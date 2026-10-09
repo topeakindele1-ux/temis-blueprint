@@ -107,9 +107,9 @@ section { padding-block: clamp(48px, 8vw, 76px); }
 /* Full-width green band — the site's structural rhythm, straight from the
    coaching-plan documents so print and web read as one system. */
 .band { background: var(--green); }
-.band h2, .band h3 { color: var(--cream); }
-.band p { color: rgba(247, 244, 236, 0.8); }
-.band .overline { color: var(--gold); }
+.band:not(.band-cream) h2, .band:not(.band-cream) h3 { color: var(--cream); }
+.band:not(.band-cream) p { color: rgba(247, 244, 236, 0.8); }
+.band:not(.band-cream) .overline { color: var(--gold); }
 
 .band-cream { background: var(--cream); }
 
@@ -624,4 +624,120 @@ section { padding-block: clamp(48px, 8vw, 76px); }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
+/* ==================== MOVEMENT AND MOTIF ====================
+   Everything below is additive. It changes no colours, no copy and no
+   layout; it only decides how things arrive and how they answer a cursor. */
+
+/* Sections arrive rather than appear. Elements start slightly low and
+   fade up as they enter the viewport. */
+.reveal { opacity: 0; transform: translateY(20px);
+          transition: opacity .5s cubic-bezier(.22,.61,.36,1),
+                      transform .5s cubic-bezier(.22,.61,.36,1); }
+.reveal.is-in { opacity: 1; transform: none; }
+/* A short stagger so a row of cards lands one after another. */
+.reveal:nth-child(2) { transition-delay: .07s; }
+.reveal:nth-child(3) { transition-delay: .14s; }
+.reveal:nth-child(4) { transition-delay: .21s; }
+
+/* Anything card-shaped answers the cursor. */
+.tile, .card, .box, .so-way, .loop-card {
+  transition: transform .3s cubic-bezier(.22,.61,.36,1),
+              box-shadow .3s cubic-bezier(.22,.61,.36,1),
+              border-color .3s ease;
+}
+.tile:hover, .card:hover, .box:hover, .so-way:hover, .loop-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(46,66,48,.13);
+}
+
+.btn { transition: transform .22s cubic-bezier(.22,.61,.36,1),
+                   box-shadow .22s ease, background-color .22s ease; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 10px 22px rgba(46,66,48,.20); }
+.btn:active { transform: translateY(0); box-shadow: none; }
+
+/* Links draw their underline instead of switching it on. */
+main a:not(.btn):not(.brand) {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px; background-position: 0 100%;
+  background-repeat: no-repeat; transition: background-size .3s ease;
+}
+main a:not(.btn):not(.brand):hover { background-size: 100% 1px; }
+
+/* The hexagon is the mark on the logo and the crop on the portrait.
+   Here it also becomes the bullet and the rhythm dot. */
+.dots i, .dot {
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  border-radius: 0 !important;
+}
+
+/* A faint hex lattice inside the dark bands, so they read as surface
+   rather than a block of flat colour. */
+.band:not(.band-cream) {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='64' viewBox='0 0 56 64'%3E%3Cpath d='M28 1 L54 16 L54 48 L28 63 L2 48 L2 16 Z' fill='none' stroke='%23F7F4EC' stroke-opacity='0.045' stroke-width='1'/%3E%3C/svg%3E");
+  background-size: 56px 64px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .tile:hover, .card:hover, .box:hover, .btn:hover { transform: none; }
+}
+
+/* ==========================================================================
+   PHOTO CARDS
+   A recipe card that leads with the food. The whole card is the link, so
+   the picture is the thing you click, not a line of text underneath it.
+   ========================================================================== */
+
+a.tile-photo {
+  padding: 0;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* The card is already the link, so it must not draw the underline that
+   every other link in main draws across itself on hover. */
+main a.tile-photo { background-image: none; }
+
+a.tile-photo img {
+  display: block;
+  flex: none;                 /* the card is a flex column; don't squash it */
+  width: 100%;
+  height: auto;              /* the width/height attributes are a size hint;
+                                without this the 1750px height wins and the
+                                aspect-ratio below never applies */
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: 50% 45%;   /* the bowl sits a touch above centre */
+  transition: transform .5s cubic-bezier(.22,.61,.36,1);
+}
+a.tile-photo:hover img { transform: scale(1.05); }
+
+a.tile-photo .tile-body {
+  padding: 22px 24px 26px;
+  display: flex; flex-direction: column; flex-grow: 1;
+}
+a.tile-photo h3 { margin-bottom: 8px; }
+a.tile-photo p  { flex-grow: 1; }
+
+/* Looks and sits like the old text link, but it is not a link any more —
+   you cannot nest one inside the card's own anchor. */
+a.tile-photo .link-action {
+  margin-top: 18px;
+  align-self: flex-start;
+  border-bottom-color: rgba(192, 90, 60, 0.35);
+}
+a.tile-photo:hover .link-action { border-bottom-color: var(--terracotta); }
+
+a.tile-photo:focus-visible {
+  outline: 3px solid var(--terracotta);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a.tile-photo img { transition: none; }
+  a.tile-photo:hover img { transform: none; }
 }

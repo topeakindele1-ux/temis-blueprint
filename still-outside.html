@@ -3,78 +3,68 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>Still Outside · A 31-day October walking challenge · The Temi Blueprint</title>
-<meta name="description" content="Summer is over. You are not. A free 31-day walking challenge for October: pick a step lane, take on a mission each week, and get your steps from the day you already have. Anywhere in the world.">
-
-<meta property="og:title" content="Still Outside · 31 days of walking">
-<meta property="og:description" content="Summer is over. You are not. A free October walking challenge, four lanes, one mission a week.">
+<title>Still Outside &middot; the October walking challenge &middot; The Temi Blueprint</title>
+<meta name="description" content="Summer is over. You are not. A free 31-day walking challenge: pick a lane, tick the days as you go, and put your name on the shared board.">
+<meta property="og:title" content="Still Outside &middot; 31 days of walking">
+<meta property="og:description" content="Summer is over. You are not. Pick a lane and tick the days.">
 <meta property="og:image" content="https://temisblueprint.com/assets/img/still-outside.jpg">
 <meta property="og:url" content="https://temisblueprint.com/still-outside.html">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://temisblueprint.com/still-outside.html">
 <meta property="og:site_name" content="The Temi Blueprint">
 <meta name="twitter:card" content="summary_large_image">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter:wght@400;600&display=swap">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/site.css">
-
 <style>
-  /* Scoped to this page: the lanes and the weekly missions. */
-  .so-hero { position:relative; overflow:hidden; }
-  .so-hero img { width:100%; height:clamp(320px,52vw,560px); object-fit:cover;
-                 object-position:30% 28%; display:block; }
-  .so-hero .so-cap { position:absolute; inset:auto 0 0 0; padding:2rem 0 1.6rem;
-                     background:linear-gradient(to top,rgba(28,38,29,.92),rgba(28,38,29,0)); }
-  .so-hero .so-cap p { color:#F7F4EC; font-family:'Cormorant Garamond',Georgia,serif;
-                       font-style:italic; font-size:clamp(1.1rem,2.6vw,1.5rem); margin:0; }
+  .lanes-big { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; margin-top:1.8rem; }
+  @media (min-width:860px) { .lanes-big { grid-template-columns:repeat(4,1fr); } }
+  .lane-big { font:inherit; cursor:pointer; padding:1.5rem 1rem; border-radius:14px;
+               text-align:center; background:transparent;
+               border:2px solid rgba(46,66,48,.14); transition:all .25s ease; }
+  .lane-big b { display:block; font-family:'Cormorant Garamond',Georgia,serif;
+                 font-size:clamp(2.2rem,6vw,3.1rem); line-height:1; color:#2E4230; }
+  .lane-big span { display:block; font-size:.72rem; letter-spacing:.18em;
+                    text-transform:uppercase; color:#C05A3C; margin:.55rem 0 .25rem; }
+  .lane-big em { font-style:normal; color:rgba(42,42,38,.6); font-size:.88rem; }
+  .lane-big[aria-pressed="true"] { border-color:#C05A3C; background:rgba(192,90,60,.09); }
 
-  .lane { display:flex; gap:1.4rem; align-items:flex-start; padding:1.4rem 1.6rem;
-          border-left:6px solid #D8B24A; background:rgba(46,66,48,.05);
-          border-radius:10px; margin-bottom:1rem; }
-  .lane:nth-child(3) { border-left-color:#C05A3C; background:rgba(192,90,60,.09); }
-  .lane:nth-child(4) { border-left-color:#2E4230; }
-  .lane-n { font-family:'Cormorant Garamond',Georgia,serif; font-weight:600;
-            font-size:clamp(1.8rem,5vw,2.5rem); color:#2E4230; min-width:5.4em; line-height:1.1; }
-  .lane-t b { display:block; font-size:.78rem; letter-spacing:.18em; text-transform:uppercase;
-              color:#C05A3C; margin-bottom:.3rem; }
-  .lane-t p { margin:0; }
+  .hexes { display:grid; grid-template-columns:repeat(auto-fit,minmax(54px,1fr));
+            gap:.5rem; max-width:640px; margin-top:1.6rem; }
+  .hx { font:inherit; cursor:pointer; border:0; aspect-ratio:1/1.1; font-weight:600;
+         font-size:.9rem; color:rgba(247,244,236,.55); background:rgba(247,244,236,.08);
+         clip-path:polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+         transition:background .2s ease, color .2s ease; }
+  .hx:hover { background:rgba(216,178,74,.45); color:#2E4230; }
+  .hx[aria-pressed="true"] { background:#D8B24A; color:#2E4230; }
+  .score { font-family:'Cormorant Garamond',Georgia,serif;
+            font-size:clamp(1.8rem,5vw,2.4rem); color:#F7F4EC; margin-top:1.4rem; }
+  .score b { color:#D8B24A; }
+  .score small { display:block; font-family:Inter,sans-serif; font-size:.9rem;
+                  color:rgba(247,244,236,.62); margin-top:.2rem; }
+  .reset { font:inherit; font-size:.85rem; background:none; border:0; cursor:pointer;
+            color:rgba(247,244,236,.5); text-decoration:underline; padding:0; margin-top:.9rem; }
 
-  .so-missions { background:rgba(46,66,48,.045); }
-  .so-ways { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1rem; }
-  .so-way { padding:1.1rem 1.3rem; border-radius:10px; background:rgba(46,66,48,.05);
-            border-left:5px solid #D8B24A; }
-  .so-way b { color:#2E4230; }
-  .mission { display:flex; gap:1.4rem; align-items:baseline; padding:1rem 0;
-             border-top:1px solid rgba(46,66,48,.14); }
-  .mission:first-child { border-top:0; }
-  .mission-d { font-size:.76rem; letter-spacing:.14em; text-transform:uppercase;
-               color:#B9923A; min-width:7.2em; font-weight:600; }
-  .mission-b b { display:block; font-family:'Cormorant Garamond',Georgia,serif;
-                 font-size:clamp(1.25rem,3.2vw,1.65rem); color:#2E4230; }
-  .mission-b p { margin:.2rem 0 0; }
+  .mis { display:flex; gap:1rem; align-items:center; padding:.75rem 0; cursor:pointer;
+          border-top:1px solid rgba(46,66,48,.14); }
+  .mis:first-of-type { border-top:0; }
+  .mis input { position:absolute; opacity:0; width:0; height:0; }
+  .mbox { flex:0 0 auto; width:24px; height:26px; background:rgba(46,66,48,.1);
+           clip-path:polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%); }
+  .mis input:checked + .mbox { background:#C05A3C; }
+  .mis i { font-style:normal; font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+            color:#B9923A; min-width:6.4em; font-weight:600; }
+  .mname { font-family:'Cormorant Garamond',Georgia,serif;
+            font-size:clamp(1.25rem,3.2vw,1.65rem); color:#2E4230; }
+  .mis input:checked ~ .mname { text-decoration:line-through; opacity:.5; }
 
-  .so-rules { counter-reset:r; list-style:none; padding:0; }
-  .so-rules li { counter-increment:r; position:relative; padding-left:3rem; margin-bottom:1.1rem; }
-  .so-rules li::before { content:counter(r); position:absolute; left:0; top:0;
-                         font-family:'Cormorant Garamond',Georgia,serif; font-size:1.9rem;
-                         font-weight:600; color:#D8B24A; line-height:1; }
-  @media (max-width:560px) {
-    .lane { flex-direction:column; gap:.5rem; }
-    .lane-n { min-width:0; }
-    .so-missions { background:rgba(46,66,48,.045); }
-  .so-ways { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:1rem; }
-  .so-way { padding:1.1rem 1.3rem; border-radius:10px; background:rgba(46,66,48,.05);
-            border-left:5px solid #D8B24A; }
-  .so-way b { color:#2E4230; }
-  .mission { flex-direction:column; gap:.2rem; }
-  }
+  .rules-row { display:flex; flex-wrap:wrap; gap:.5rem 2rem; margin-top:1.2rem;
+                color:rgba(42,42,38,.72); }
+  @media print { .nav,.footer,.reset,.btns { display:none !important; } }
 </style>
 </head>
-
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -106,132 +96,141 @@
 <main id="main">
 
 <section class="hero">
-  <div class="wrap">
-    <p class="overline">Still Outside &middot; October challenge</p>
-    <h1 class="mt-1 mb-2">Summer is over. You are not.</h1>
-    <p class="lead measure">The sun went in and everybody moved indoors. You do not have to.
-      For the next 31 days I am walking every single day, outside, whatever the weather
-      is doing, and I would like you to come with me. It does not matter where you live.</p>
-    <p class="measure">It is free, there is nothing to buy, and you do not have to be fit to
-      start. You just have to pick a lane and go outside.</p>
+  <div class="wrap split split-top" style="grid-template-columns:1.15fr .85fr">
+    <div>
+      <p class="overline">October challenge</p>
+      <h1 class="mt-1 mb-2">Summer is over. You are not.</h1>
+      <p class="lead measure">31 days of walking. Pick a lane, tick the days as you go,
+        and put your name on the board with everyone else.</p>
+      <p class="btns">
+        <a class="btn btn-primary" href="https://docs.google.com/spreadsheets/d/1Y68DFuae7yd4JE2Qgu5hD6n7j_hi-Nvui-fd40qkIGo/edit">Put your name on the board</a>
+      </p>
+    </div>
+    <figure class="hex-portrait">
+      <svg viewBox="293.5 57.5 53 59" role="img" aria-label="Temi on a park path in October">
+        <defs>
+          <clipPath id="hexclip2">
+            <path d="M 322.8,63.4 L 339.7,73.1 Q 342.5,74.7 342.5,78 L 342.5,98
+                     Q 342.5,101.3 339.7,102.9 L 322.8,112.6 Q 320,114.2 317.2,112.6
+                     L 300.3,102.9 Q 297.5,101.3 297.5,98 L 297.5,78
+                     Q 297.5,74.7 300.3,73.1 L 317.2,63.4 Q 320,61.8 322.8,63.4 Z"/>
+          </clipPath>
+        </defs>
+        <image href="assets/img/still-outside.jpg" x="293.5" y="57.5" width="53" height="59"
+               preserveAspectRatio="xMidYMid slice" clip-path="url(#hexclip2)"/>
+      </svg>
+      <figcaption>Day one, and still outside</figcaption>
+    </figure>
   </div>
-</section>
-
-<section class="so-hero" style="padding:0">
-  <img src="assets/img/still-outside.jpg" alt="Temi on a park path in October, autumn leaves on the grass behind her">
-  <div class="so-cap"><div class="wrap"><p>Day one. October, and still outside.</p></div></div>
 </section>
 
 <section>
   <div class="wrap">
-    <p class="overline">Pick your lane</p>
-    <h2 class="mt-1 mb-2">Four ways in. All of them count.</h2>
-    <p class="measure mb-3">Choose the one that is a stretch but not a fantasy. The lane you
-      finish is worth more than the lane you quit in week one.</p>
-      <div class="lane">
-        <div class="lane-n">8,000</div>
-        <div class="lane-t"><b>Starter</b><p>Building the habit. If you are mostly at a desk, this is already a real change.</p></div>
-      </div>
-      <div class="lane">
-        <div class="lane-n">12,000</div>
-        <div class="lane-t"><b>Steady</b><p>You already move most days. This makes it deliberate.</p></div>
-      </div>
-      <div class="lane">
-        <div class="lane-n">15,000</div>
-        <div class="lane-t"><b>Strong</b><p>The lane I am walking. Roughly two hours on your feet, spread across the day.</p></div>
-      </div>
-      <div class="lane">
-        <div class="lane-n">20,000</div>
-        <div class="lane-t"><b>Relentless</b><p>You were going to do this anyway. Go on then.</p></div>
-      </div>
-  </div>
-</section>
-
-
-<section>
-  <div class="wrap">
-    <p class="overline">No extra hour needed</p>
-    <h2 class="mt-1 mb-2">Where the steps come from</h2>
-    <p class="measure mb-3">You are not adding a workout to your day. You are moving the things
-      you already do so that they happen on your feet. Almost nobody has a spare two hours.
-      Nearly everybody has these.</p>
-    <div class="so-ways">
-      <div class="so-way"><b>Walk to get the groceries.</b> A smaller shop more often beats one big drive.</div>
-      <div class="so-way"><b>Walk to a friend's house</b> instead of driving to one.</div>
-      <div class="so-way"><b>Walk to the gym.</b> That is your warm-up done before you arrive.</div>
-      <div class="so-way"><b>Take half your lunch break outside.</b> Walk first, eat after.</div>
-      <div class="so-way"><b>Get off a stop early.</b> Every single day, without thinking about it.</div>
-      <div class="so-way"><b>Take calls on your feet.</b> Nobody on the other end can tell.</div>
+    <p class="overline">Step one</p>
+    <h2 class="mt-1">Pick your lane</h2>
+    <div class="lanes-big">
+        <button class="lane-big" data-goal="8000" aria-pressed="false">
+          <b>8,000</b><span>Starter</span><em>building the habit</em></button>
+        <button class="lane-big" data-goal="12000" aria-pressed="false">
+          <b>12,000</b><span>Steady</span><em>you already move</em></button>
+        <button class="lane-big" data-goal="15000" aria-pressed="false">
+          <b>15,000</b><span>Strong</span><em>the one I walk</em></button>
+        <button class="lane-big" data-goal="20000" aria-pressed="false">
+          <b>20,000</b><span>Relentless</span><em>show off</em></button>
     </div>
   </div>
 </section>
 
-<section class="so-missions">
+<section class="band">
   <div class="wrap">
-    <p class="overline">One mission a week</p>
-    <h2 class="mt-1 mb-2">Not just a number.</h2>
-    <p class="measure mb-3">The steps are the floor. The missions are the reason you will
-      actually remember this month.</p>
-      <div class="mission">
-        <div class="mission-d">Oct 1&ndash;4</div>
-        <div class="mission-b"><b>Somewhere new</b><p>A street, a trail or a park you have never walked before.</p></div>
-      </div>
-      <div class="mission">
-        <div class="mission-d">Oct 5&ndash;11</div>
-        <div class="mission-b"><b>Walk in bad weather</b><p>Whatever the sky is doing that week, go anyway. You will be fine.</p></div>
-      </div>
-      <div class="mission">
-        <div class="mission-d">Oct 12&ndash;18</div>
-        <div class="mission-b"><b>Bring someone</b><p>A friend, a kid, a dog, or a phone call to someone you owe one.</p></div>
-      </div>
-      <div class="mission">
-        <div class="mission-d">Oct 19&ndash;25</div>
-        <div class="mission-b"><b>Before light</b><p>One walk at sunrise, or one after dark. The city is different then.</p></div>
-      </div>
-      <div class="mission">
-        <div class="mission-d">Oct 26&ndash;31</div>
-        <div class="mission-b"><b>Go long</b><p>Your longest walk of the month. Finish the way you started.</p></div>
-      </div>
+    <p class="overline">Step two</p>
+    <h2 class="mt-1 mb-2">Tick a day every time you hit it</h2>
+    <div class="hexes">
+          <button class="hx" data-day="1" aria-pressed="false">1</button>
+          <button class="hx" data-day="2" aria-pressed="false">2</button>
+          <button class="hx" data-day="3" aria-pressed="false">3</button>
+          <button class="hx" data-day="4" aria-pressed="false">4</button>
+          <button class="hx" data-day="5" aria-pressed="false">5</button>
+          <button class="hx" data-day="6" aria-pressed="false">6</button>
+          <button class="hx" data-day="7" aria-pressed="false">7</button>
+          <button class="hx" data-day="8" aria-pressed="false">8</button>
+          <button class="hx" data-day="9" aria-pressed="false">9</button>
+          <button class="hx" data-day="10" aria-pressed="false">10</button>
+          <button class="hx" data-day="11" aria-pressed="false">11</button>
+          <button class="hx" data-day="12" aria-pressed="false">12</button>
+          <button class="hx" data-day="13" aria-pressed="false">13</button>
+          <button class="hx" data-day="14" aria-pressed="false">14</button>
+          <button class="hx" data-day="15" aria-pressed="false">15</button>
+          <button class="hx" data-day="16" aria-pressed="false">16</button>
+          <button class="hx" data-day="17" aria-pressed="false">17</button>
+          <button class="hx" data-day="18" aria-pressed="false">18</button>
+          <button class="hx" data-day="19" aria-pressed="false">19</button>
+          <button class="hx" data-day="20" aria-pressed="false">20</button>
+          <button class="hx" data-day="21" aria-pressed="false">21</button>
+          <button class="hx" data-day="22" aria-pressed="false">22</button>
+          <button class="hx" data-day="23" aria-pressed="false">23</button>
+          <button class="hx" data-day="24" aria-pressed="false">24</button>
+          <button class="hx" data-day="25" aria-pressed="false">25</button>
+          <button class="hx" data-day="26" aria-pressed="false">26</button>
+          <button class="hx" data-day="27" aria-pressed="false">27</button>
+          <button class="hx" data-day="28" aria-pressed="false">28</button>
+          <button class="hx" data-day="29" aria-pressed="false">29</button>
+          <button class="hx" data-day="30" aria-pressed="false">30</button>
+          <button class="hx" data-day="31" aria-pressed="false">31</button>
+    </div>
+    <p class="score"><b id="done">0</b> of 31 <small id="streak">This page remembers where you are on this device.</small></p>
+    <p><button class="reset" id="reset">Clear and start again</button></p>
   </div>
 </section>
 
 <section>
   <div class="wrap">
+    <p class="overline">One a week</p>
+    <h2 class="mt-1 mb-3">Missions</h2>
+    <div class="measure">
+        <label class="mis"><input type="checkbox" class="mtick" data-m="0">
+          <span class="mbox"></span><i>Oct 1&ndash;4</i><span class="mname">Somewhere new</span></label>
+        <label class="mis"><input type="checkbox" class="mtick" data-m="1">
+          <span class="mbox"></span><i>Oct 5&ndash;11</i><span class="mname">Walk in bad weather</span></label>
+        <label class="mis"><input type="checkbox" class="mtick" data-m="2">
+          <span class="mbox"></span><i>Oct 12&ndash;18</i><span class="mname">Bring someone</span></label>
+        <label class="mis"><input type="checkbox" class="mtick" data-m="3">
+          <span class="mbox"></span><i>Oct 19&ndash;25</i><span class="mname">Before light</span></label>
+        <label class="mis"><input type="checkbox" class="mtick" data-m="4">
+          <span class="mbox"></span><i>Oct 26&ndash;31</i><span class="mname">Go long</span></label>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
     <p class="overline">The rules</p>
-    <h2 class="mt-1 mb-3">All of them.</h2>
-    <ol class="so-rules measure">
-      <li>Pick one lane and stay in it, wherever you live. Any way you get the steps counts.</li>
-      <li>Every day in October. Rest days still count, because walking is not training.</li>
-      <li>Miss a day, start again the next one. Nobody restarts the month.</li>
-      <li>Weather is not a reason. That is the entire point of doing this in October.</li>
-    </ol>
+    <h2 class="mt-1">All of them.</h2>
+    <p class="rules-row">
+      <span>Any steps count.</span><span>Rest days too.</span>
+      <span>Miss a day, start again the next.</span><span>Weather is not a reason.</span>
+    </p>
   </div>
 </section>
 
 <section class="band">
   <div class="wrap center">
-    <p class="overline">How to join</p>
-    <h2 class="mt-1 mb-2">Pick a lane and put your name up</h2>
-    <p class="measure mb-3" style="margin-left:auto;margin-right:auto">Add yourself to the board,
-      then keep your own tracker as you go. Tag me in your walks through the month and I will
-      repost my favourites.</p>
+    <h2 class="mt-0 mb-2">Walk it with everyone else</h2>
+    <p class="measure mb-3" style="margin-left:auto;margin-right:auto">The board is shared.
+      Add your name, fill in your days, and see how everyone is getting on.</p>
     <p class="btns" style="justify-content:center">
-      <a class="btn btn-primary" href="https://docs.google.com/spreadsheets/d/1Y68DFuae7yd4JE2Qgu5hD6n7j_hi-Nvui-fd40qkIGo/edit">Add your name to the board</a>
-      <a class="btn btn-ghost" href="still-outside-tracker.html">Open your tracker</a>
+      <a class="btn btn-primary" href="https://docs.google.com/spreadsheets/d/1Y68DFuae7yd4JE2Qgu5hD6n7j_hi-Nvui-fd40qkIGo/edit">Join the board</a>
+      <a class="btn btn-ghost" href="https://instagram.com/temis_blueprint">Find me on Instagram</a>
     </p>
-    <p class="micro" style="margin-top:1.4rem;opacity:.75">The board is a shared sheet. Everyone
-      walking can see it, so you can see how everyone else is doing and they can see you.</p>
   </div>
 </section>
 
 <section style="padding-top:0">
   <div class="wrap">
     <div class="notice measure">
-      <strong>Before you start.</strong> This is a general movement challenge, not personal
-      medical advice. If you are pregnant, recovering from an injury or surgery, or managing a
-      health condition, check with your doctor before adding a large amount of daily walking.
-      Build up rather than jumping straight to your target, wear shoes that fit, and stop if
-      something hurts. Sore is fine, sharp is not.
+      <strong>Before you start.</strong> General movement advice, not personal medical
+      advice. If you are pregnant, injured or managing a health condition, check with your
+      doctor first. Build up rather than jumping straight to your number.
     </div>
   </div>
 </section>
@@ -249,6 +248,7 @@
       <li><a href="free-workouts.html">Free Workouts</a></li>
       <li><a href="recipes.html">Recipes</a></li>
       <li><a href="transformations.html">Results</a></li>
+      <li><a href="still-outside.html">Still Outside</a></li>
       <li><a href="about.html">About</a></li>
     </ul>
     <div class="socials">
@@ -265,5 +265,62 @@
 </footer>
 
 <script src="assets/js/site.js"></script>
+<script>
+/* Your lane, your days and your missions live in this browser only. Nothing
+   is sent anywhere, which is why there is nothing to sign up for. */
+(function () {
+  var KEY = 'still-outside-2026';
+  var state = { goal: null, days: [], missions: [] };
+  try { var s = localStorage.getItem(KEY); if (s) state = Object.assign(state, JSON.parse(s)); }
+  catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  var hx = [].slice.call(document.querySelectorAll('.hx'));
+  var lanes = [].slice.call(document.querySelectorAll('.lane-big'));
+  var ticks = [].slice.call(document.querySelectorAll('.mtick'));
+  var done = document.getElementById('done'), streak = document.getElementById('streak');
+
+  function longest() {
+    var best = 0, run = 0;
+    for (var d = 1; d <= 31; d++) {
+      if (state.days.indexOf(d) > -1) { run++; best = Math.max(best, run); } else run = 0;
+    }
+    return best;
+  }
+  function paint() {
+    hx.forEach(function (b) {
+      b.setAttribute('aria-pressed', state.days.indexOf(+b.dataset.day) > -1 ? 'true' : 'false');
+    });
+    lanes.forEach(function (b) {
+      b.setAttribute('aria-pressed', +b.dataset.goal === state.goal ? 'true' : 'false');
+    });
+    ticks.forEach(function (t) { t.checked = state.missions.indexOf(+t.dataset.m) > -1; });
+    done.textContent = state.days.length;
+    var r = longest();
+    streak.textContent = state.days.length === 0
+      ? 'This page remembers where you are on this device.'
+      : (state.days.length === 31 ? 'Every single day. Send me a screenshot of this.'
+                                  : 'Longest run so far: ' + r + (r === 1 ? ' day' : ' days'));
+  }
+  hx.forEach(function (b) { b.addEventListener('click', function () {
+    var d = +b.dataset.day, i = state.days.indexOf(d);
+    if (i > -1) state.days.splice(i, 1); else state.days.push(d);
+    save(); paint();
+  }); });
+  lanes.forEach(function (b) { b.addEventListener('click', function () {
+    var g = +b.dataset.goal; state.goal = (state.goal === g) ? null : g; save(); paint();
+  }); });
+  ticks.forEach(function (t) { t.addEventListener('change', function () {
+    var m = +t.dataset.m, i = state.missions.indexOf(m);
+    if (t.checked && i === -1) state.missions.push(m);
+    if (!t.checked && i > -1) state.missions.splice(i, 1);
+    save(); paint();
+  }); });
+  document.getElementById('reset').addEventListener('click', function () {
+    state = { goal: null, days: [], missions: [] }; save(); paint();
+  });
+  paint();
+})();
+</script>
 </body>
 </html>
