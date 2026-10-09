@@ -741,3 +741,34 @@ a.tile-photo:focus-visible {
   a.tile-photo img { transition: none; }
   a.tile-photo:hover img { transform: none; }
 }
+
+/* ==========================================================================
+   MOVEMENT LIBRARY
+   Filmed demonstrations on the workouts page. Nothing downloads until
+   somebody presses play — the poster is a still lifted from the clip and
+   preload is off — so eight videos cost about 300KB on arrival, not 11MB.
+   ========================================================================== */
+
+.moves { display: grid; gap: 22px; grid-template-columns: repeat(2, 1fr); }
+@media (min-width: 620px) { .moves { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 900px) { .moves { grid-template-columns: repeat(4, 1fr); } }
+
+.move {
+  background: var(--white);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  margin: 0;
+}
+.move video {
+  display: block; width: 100%;
+  height: auto;          /* the width/height attributes count as real CSS, and
+                            without this the 960px height wins and aspect-ratio
+                            below never gets a say */
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  background: #1d1d1b;   /* the clip is dark at the edges; match it while loading */
+}
+.move figcaption { padding: 16px 18px 20px; }
+.move h3 { font-size: 1rem; margin-bottom: 6px; }
+.move p  { font-size: 0.85rem; margin: 0; }
