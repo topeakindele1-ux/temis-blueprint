@@ -215,7 +215,10 @@ section { padding-block: clamp(48px, 8vw, 76px); }
   color: var(--green);
 }
 
-@media (max-width: 899px) {
+/* The nav switches to the hamburger at 999px, not 899px like the hero does.
+   Seven links plus the button need about 640px and only clear it from 1000px
+   up; below that the bar wrapped onto two rows and grew by 20px. */
+@media (max-width: 999px) {
   .nav-toggle { display: block; }
   .nav-links {
     display: none;
@@ -772,3 +775,29 @@ a.tile-photo:focus-visible {
 .move figcaption { padding: 16px 18px 20px; }
 .move h3 { font-size: 1rem; margin-bottom: 6px; }
 .move p  { font-size: 0.85rem; margin: 0; }
+
+/* ==========================================================================
+   MENU GROUPINGS
+   Labels inside the mobile panel only. The desktop nav stays flat and these
+   never render there, so no link is ever hidden behind a tap at any width —
+   the free pages are the ones doing the lead generation and they should be
+   one tap away, not two.
+   ========================================================================== */
+
+.nav-group { display: none; }
+
+@media (max-width: 999px) {
+  .nav-group {
+    display: block;
+    border-bottom: 0 !important;   /* .nav-links li gives every row a rule */
+    padding-top: 20px;
+    padding-bottom: 4px;
+    font-family: var(--sans);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--terracotta);
+  }
+  .nav-group:first-child { padding-top: 6px; }
+}
