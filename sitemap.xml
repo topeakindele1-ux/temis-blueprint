@@ -13,4 +13,9 @@
   <url><loc>https://temisblueprint.com/recipe-peanut-noodles.html</loc><priority>0.6</priority></url>
   <url><loc>https://temisblueprint.com/recipe-overnight-oats.html</loc><priority>0.6</priority></url>
   <url><loc>https://temisblueprint.com/recipe-vegetables.html</loc><priority>0.6</priority></url>
+  <url>
+    <loc>https://temisblueprint.com/still-outside.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>
